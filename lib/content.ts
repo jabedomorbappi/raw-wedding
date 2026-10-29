@@ -61,3 +61,17 @@ export const slideshow: ImageItem[] = Array.from({ length: 14 }, (_, i) => ({
   src: img(`rw-slide-${i}`, 800, 1000),
   alt: `Wedding moment ${i + 1}`,
 }));
+
+export interface NavLink {
+  label: string;
+  href: string;
+}
+
+export const navLinks: NavLink[] = [
+  { label: "Home", href: "#home" },
+  { label: "Gallery", href: "#gallery" },
+  { label: "Films", href: "#films" },
+  { label: "Packages", href: "#packages" },
+  { label: "Crew", href: "#crew" },
+  { label: "Contact", href: "#contact" },
+];

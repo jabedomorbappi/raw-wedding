@@ -26,3 +26,7 @@ body {
   color: var(--color-charcoal);
   font-family: var(--font-sans);
 }
+
+section[id] {
+  scroll-margin-top: 4rem;
+}
