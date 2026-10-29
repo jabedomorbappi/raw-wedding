@@ -30,3 +30,24 @@ body {
 section[id] {
   scroll-margin-top: 4rem;
 }
+
+@theme inline {
+  --color-maroon: #8e2b33;
+  --color-cocoa: #754414;
+  --color-deepteal: #18241f;
+}
+
+.paper {
+  background-color: #eadfd2;
+  background-image:
+    radial-gradient(
+      circle at 20% 15%,
+      rgba(255, 255, 255, 0.45),
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 85% 85%,
+      rgba(150, 110, 70, 0.14),
+      transparent 55%
+    );
+}

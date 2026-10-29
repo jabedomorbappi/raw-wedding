@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model SiteContent {
+  key       String   @id
+  data      Json
+  updatedAt DateTime @updatedAt
+}
+
+enum MediaSource {
+  UPLOAD
+  LINK
+  IMPORTED
+}
+
+model MediaAsset {
+  id         String      @id @default(cuid())
+  source     MediaSource
+  url        String
+  storageKey String?
+  mimeType   String?
+  sizeBytes  Int?
+  label      String?
+  createdAt  DateTime    @default(now())
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  body      String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+}

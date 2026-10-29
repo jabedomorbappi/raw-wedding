@@ -20,7 +20,7 @@ const columnOffsets = [
 
 export default function FilmStripGrid({ banner, columns }: FilmStripGridProps) {
   return (
-    <section className="w-full bg-[#E6DED4]">
+    <section id="gallery" className="w-full bg-[#E6DED4]">
       <div className="relative h-[55vh] w-full">
         <SmartImage
           src={banner.src}
