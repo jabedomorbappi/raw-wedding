@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/db";
 import Link from "next/link";
+import { Suspense } from "react";
 
 const labels: Record<string, string> = {
   cover: "Hero cover (title, subtitle, background)",
@@ -20,21 +21,14 @@ const labels: Record<string, string> = {
   navLinks: "Menu links",
 };
 
-export default async function DashboardPage() {
+async function DashboardData() {
   const [rows, unread] = await Promise.all([
     prisma.siteContent.findMany({ orderBy: { key: "asc" } }),
     prisma.message.count({ where: { read: false } }),
   ]);
 
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="font-serif text-3xl">Dashboard</h1>
-        <p className="mt-1 text-stone-600">
-          Choose a section to edit. Changes appear on the website right away.
-        </p>
-      </div>
-
+    <>
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="rounded-2xl bg-white p-5 shadow-sm">
           <p className="text-sm text-stone-500">Website sections</p>
@@ -69,6 +63,24 @@ export default async function DashboardPage() {
           </li>
         ))}
       </ul>
+    </>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <div className="space-y-8">
+      <div>
+        <h1 className="font-serif text-3xl">Dashboard</h1>
+        <p className="mt-1 text-stone-600">
+          Choose a section to edit. Changes appear on the website right away.
+        </p>
+      </div>
+      <Suspense
+        fallback={<p className="text-stone-500">Loading sections...</p>}
+      >
+        <DashboardData />
+      </Suspense>
     </div>
   );
 }
