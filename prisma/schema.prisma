@@ -2,10 +2,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
+
 
 model SiteContent {
   key       String   @id
@@ -44,4 +41,11 @@ model AdminUser {
   email        String   @unique
   passwordHash String
   createdAt    DateTime @default(now())
+}
+
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
