@@ -11,49 +11,61 @@ import SanatanPackages from "@/components/sections/SanatanPackages";
 import SlidingShowcase from "@/components/sections/SlidingShowcase";
 import StandardPackages from "@/components/sections/StandardPackages";
 import Storytelling from "@/components/sections/Storytelling";
-import {
-  addOns,
-  alponaTrio,
-  cover,
-  films,
-  filmStrip,
-  portraitSplit,
-  portraitStack,
-  sanatanArt,
-  sanatanPackages,
-  slideshow,
-  standardPackages,
-  storytelling,
-  team,
-  terms,
-} from "@/lib/content";
+import FloatingContact from "@/components/ui/FloatingContact";
+import Navbar from "@/components/ui/Navbar";
+import { getSiteContent } from "@/lib/site";
+import { connection } from "next/server";
+import { Suspense } from "react";
+
+async function HomeContent() {
+  // Always read fresh data, so admin edits show up right away.
+  await connection();
+  const c = await getSiteContent();
+
+  return (
+    <>
+      <Navbar />
+      <main>
+        <HeroCover
+          title={c.cover.title}
+          subtitle={c.cover.subtitle}
+          image={c.cover.image}
+        />
+        <PortraitSplit
+          main={c.portraitSplit.main}
+          cards={c.portraitSplit.cards}
+        />
+        <AlponaTrio circle={c.alponaTrio.circle} cards={c.alponaTrio.cards} />
+        <FilmStripGrid
+          banner={c.filmStrip.banner}
+          columns={c.filmStrip.columns}
+        />
+        <SlidingShowcase items={c.slideshow} />
+        <PortraitStack
+          main={c.portraitStack.main}
+          stack={c.portraitStack.stack}
+        />
+        <FilmsGrid films={c.films} />
+        <Storytelling
+          caption={c.storytelling.caption}
+          video={c.storytelling.video}
+          images={c.storytelling.images}
+        />
+        <StandardPackages packages={c.standardPackages} />
+        <SanatanPackages packages={c.sanatanPackages} art={c.sanatanArt} />
+        <AddOnsTerms addOns={c.addOns} terms={c.terms} />
+        <Crew members={c.team} />
+      </main>
+      <Footer info={c.siteInfo} />
+      <FloatingContact info={c.siteInfo} />
+    </>
+  );
+}
 
 export default function Home() {
   return (
-    <>
-      <main>
-        <HeroCover
-          title={cover.title}
-          subtitle={cover.subtitle}
-          image={cover.image}
-        />
-        <PortraitSplit main={portraitSplit.main} cards={portraitSplit.cards} />
-        <AlponaTrio circle={alponaTrio.circle} cards={alponaTrio.cards} />
-        <FilmStripGrid banner={filmStrip.banner} columns={filmStrip.columns} />
-        <SlidingShowcase items={slideshow} />
-        <PortraitStack main={portraitStack.main} stack={portraitStack.stack} />
-        <FilmsGrid films={films} />
-        <Storytelling
-          caption={storytelling.caption}
-          video={storytelling.video}
-          images={storytelling.images}
-        />
-        <StandardPackages packages={standardPackages} />
-        <SanatanPackages packages={sanatanPackages} art={sanatanArt} />
-        <AddOnsTerms addOns={addOns} terms={terms} />
-        <Crew members={team} />
-      </main>
-      <Footer />
-    </>
+    <Suspense fallback={<div className="min-h-screen bg-espresso" />}>
+      <HomeContent />
+    </Suspense>
   );
 }

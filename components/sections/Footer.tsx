@@ -5,7 +5,7 @@ import {
   InstagramIcon,
   YouTubeIcon,
 } from "@/components/ui/SocialIcons";
-import { siteInfo } from "@/lib/content";
+import { SiteInfo } from "@/lib/content";
 import { Mail, MapPin, MessageCircle, Phone, Send } from "lucide-react";
 import { useState, type FormEvent, type ReactNode } from "react";
 
@@ -18,8 +18,10 @@ const socialIcons: Record<string, ReactNode> = {
 
 const fieldClass =
   "w-full border-b border-white/30 bg-transparent py-3 text-white outline-none transition-colors placeholder:text-white/50 focus:border-bronze";
-
-export default function Footer() {
+interface FooterProps {
+  info: SiteInfo;
+}
+export default function Footer({ info: siteInfo }: FooterProps) {
   const [sent, setSent] = useState(false);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {

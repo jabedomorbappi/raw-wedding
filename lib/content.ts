@@ -333,3 +333,5 @@ export const siteInfo = {
     { label: "WhatsApp", href: "https://wa.me/8801812284828" },
   ],
 };
+
+export type SiteInfo = typeof siteInfo;
